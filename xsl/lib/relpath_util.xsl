@@ -12,6 +12,24 @@
   
   <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
     <xd:desc>
+      <xd:p>Returns the base URI of the specified file. Adds "file:/" protocol if missing.</xd:p>
+    </xd:desc>
+    <xd:param name="uri"></xd:param>
+    <xd:return></xd:return>
+  </xd:doc>
+  <xsl:function name="relpath:file-uri" as="xs:string">
+    <xsl:param name="uri" as="xs:string"/>
+    <xsl:variable name="dirtyUri" select="$uri" as="xs:string"/>
+    <xsl:variable name="sanitizedUri" 
+      select="if (matches($dirtyUri, '^[a-zA-Z]:') or matches($dirtyUri, '^/'))
+      then (concat('file:/', $dirtyUri))
+      else $dirtyUri" 
+      as="xs:string"/>
+    <xsl:sequence select="$sanitizedUri"/>
+  </xsl:function>
+  
+  <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
+    <xd:desc>
       <xd:p>Returns the base URI of the specified context node. Fixes "file:///" to "file:/" 
       for compatibility with processors that choke on "file:///".</xd:p>
     </xd:desc>

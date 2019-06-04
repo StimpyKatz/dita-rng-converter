@@ -356,7 +356,7 @@
           <xsl:for-each select="$referencedModulesFiltered">
             <xsl:variable name="baseName" as="xs:string" select="relpath:getNamePart(base-uri(*[1]))"/>
             <xsl:variable name="resultUri" as="xs:string" select="relpath:newFile($outdir, 'temp/' || $baseName || '_filteredNotAllowed.rng')"/>
-            <xsl:result-document href="{$resultUri}">
+            <xsl:result-document href="{relpath:file-uri($resultUri)}">
               <xsl:sequence select="."/>
             </xsl:result-document>
           </xsl:for-each>
